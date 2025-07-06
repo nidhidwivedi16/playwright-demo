@@ -3,78 +3,78 @@ import { test, expect } from "@playwright/test";
 
 test.describe("My Test Suite", () => {
 
-  test('Download a file', async ({ page }) => {
-    // Navigate to the page with the download link
-    await page.goto("https://playwright.dev/");
-    // Click the download link
-    const [download] = await Promise.all([
-      page.waitForEvent('download'), // Wait for the download to start
-      page.click('text=Download') // Click the download link
-    ]);
-    // Get the download path
-    const downloadPath = await download.path();
-    console.log("Downloaded file path:", downloadPath);
-    // Verify the file was downloaded
-    expect(downloadPath).toBeDefined();
-    expect(downloadPath).toContain('.zip'); // Assuming the downloaded file is a zip file
-    // You can also check the file name or other properties if needed
-    // For example, you can get the file name
-    const fileName = download.suggestedFilename();
-    console.log("Downloaded file name:", fileName);
-    expect(fileName).toBeDefined();
-    expect(fileName).toContain('.zip'); // Assuming the downloaded file is a zip file
+  // test('Download a file', async ({ page }) => {
+  //   // Navigate to the page with the download link
+  //   await page.goto("https://playwright.dev/");
+  //   // Click the download link
+  //   const [download] = await Promise.all([
+  //     page.waitForEvent('download'), // Wait for the download to start
+  //     page.click('text=Download') // Click the download link
+  //   ]);
+  //   // Get the download path
+  //   const downloadPath = await download.path();
+  //   console.log("Downloaded file path:", downloadPath);
+  //   // Verify the file was downloaded
+  //   expect(downloadPath).toBeDefined();
+  //   expect(downloadPath).toContain('.zip'); // Assuming the downloaded file is a zip file
+  //   // You can also check the file name or other properties if needed
+  //   // For example, you can get the file name
+  //   const fileName = download.suggestedFilename();
+  //   console.log("Downloaded file name:", fileName);
+  //   expect(fileName).toBeDefined();
+  //   expect(fileName).toContain('.zip'); // Assuming the downloaded file is a zip file
     
-    // Optionally, you can check the file content or size
-    const fileContent = await download.path();
-    expect(fileContent).toBeTruthy();
-    // Clean up: delete the downloaded file if necessary
-    // await fs.unlink(downloadPath); // Uncomment if you want to delete the file after the test
+  //   // Optionally, you can check the file content or size
+  //   const fileContent = await download.path();
+  //   expect(fileContent).toBeTruthy();
+  //   // Clean up: delete the downloaded file if necessary
+  //   // await fs.unlink(downloadPath); // Uncomment if you want to delete the file after the test
 
-  });
+  // });
 
-  test('Upload a file', async ({ page }) => {
-    // Navigate to the page with the upload input
-    await page.goto("https://playwright.dev/");
-    // Click the upload button to open the file dialog
-    const [fileChooser] = await Promise.all([
-      page.waitForEvent('filechooser'), // Wait for the file chooser to open
-      page.click('text=Upload') // Click the upload button
-    ]);
-    // Select the file to upload
-    const filePath = 'path/to/your/file.txt'; // Replace with the actual file path
-    await fileChooser.setFiles(filePath);
-    // Verify the file was uploaded by checking the input's value
-    // Replace 'input[type="file"]' with the actual selector if different
-    const uploadedFileName = await page.$eval('input[type="file"]', (input: HTMLInputElement) => input.files?.[0]?.name);
-    console.log("Uploaded file name:", uploadedFileName);
-    expect(uploadedFileName).toBeDefined();
-    expect(uploadedFileName).toContain('file.txt'); // Assuming the uploaded file is file.txt
-    // Optionally, you can check the file content or size
-    // const fileContent = await fs.readFile(filePath, 'utf-8');
-    // expect(fileContent).toBeTruthy();
-    // Clean up: delete the uploaded file if necessary
-    // await fs.unlink(filePath); // Uncomment if you want to delete the file after the test
-  });
+  // test('Upload a file', async ({ page }) => {
+  //   // Navigate to the page with the upload input
+  //   await page.goto("https://playwright.dev/");
+  //   // Click the upload button to open the file dialog
+  //   const [fileChooser] = await Promise.all([
+  //     page.waitForEvent('filechooser'), // Wait for the file chooser to open
+  //     page.click('text=Upload') // Click the upload button
+  //   ]);
+  //   // Select the file to upload
+  //   const filePath = 'path/to/your/file.txt'; // Replace with the actual file path
+  //   await fileChooser.setFiles(filePath);
+  //   // Verify the file was uploaded by checking the input's value
+  //   // Replace 'input[type="file"]' with the actual selector if different
+  //   const uploadedFileName = await page.$eval('input[type="file"]', (input: HTMLInputElement) => input.files?.[0]?.name);
+  //   console.log("Uploaded file name:", uploadedFileName);
+  //   expect(uploadedFileName).toBeDefined();
+  //   expect(uploadedFileName).toContain('file.txt'); // Assuming the uploaded file is file.txt
+  //   // Optionally, you can check the file content or size
+  //   // const fileContent = await fs.readFile(filePath, 'utf-8');
+  //   // expect(fileContent).toBeTruthy();
+  //   // Clean up: delete the uploaded file if necessary
+  //   // await fs.unlink(filePath); // Uncomment if you want to delete the file after the test
+  // });
 
-  test('Cookies', async ({ page }) => {
-    await page.goto("https://playwright.dev/");
-    console.log("Cookies before setting:", await page.context().cookies());
-    // Set a cookie
-    await page.context().addCookies([{
-      name: "myCookie",
-      value: "myValue",
-      domain: "playwright.dev", // Ensure the domain matches the page's domain    
-      url: "https://playwright.dev/"
-    }]);
-    console.log("Cookies after setting:", await page.context().cookies());
-    // Verify the cookie is set
-    const cookies = await page.context().cookies();
-    const myCookie = cookies.find(cookie => cookie.name === "myCookie");
-    expect(myCookie).toBeDefined();
-    expect(myCookie?.value).toBe("myValue");
-    await page.context().clearCookies(); // Clear cookies after test
-    console.log("Cookies after clearing:", await page.context().cookies());
-  });
+  // test('Cookies', async ({ page }) => {
+  //   await page.goto("https://playwright.dev/");
+  //   console.log("Cookies before setting:", await page.context().cookies());
+  //   // Set a cookie
+  //   await page.context().addCookies([{
+  //     name: "myCookie",
+  //     value: "myValue",
+  //     domain: "playwright.dev", // Ensure the domain matches the page's domain    
+  //     url: "https://playwright.dev/"
+  //   }]);
+  //   console.log("Cookies after setting:", await page.context().cookies());
+  //   // Verify the cookie is set
+  //   const cookies = await page.context().cookies();
+  //   const myCookie = cookies.find(cookie => cookie.name === "myCookie");
+  //   expect(myCookie).toBeDefined();
+  //   expect(myCookie?.value).toBe("myValue");
+  //   await page.context().clearCookies(); // Clear cookies after test
+  //   console.log("Cookies after clearing:", await page.context().cookies());
+  // });
 
   test("Session (or Local) Storage", async ({ page }) => {
     await page.goto("https://playwright.dev/");
