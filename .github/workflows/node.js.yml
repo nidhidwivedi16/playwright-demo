@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npx playwright install
-    - run: npm playwright test
+    - run: npx playwright test
     env:
        BITHEAP_USERNAME: playwright
        PASS: playwright
